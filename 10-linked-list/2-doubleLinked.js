@@ -1,5 +1,4 @@
-/* [3] Class - DoubleLinked
- */
+// [2] Class - DoubleLinked
 class Node {
   constructor(val) {
     this.val = val;
@@ -14,7 +13,7 @@ class DoublyLinkList {
     this.tail = null;
     this.length = 0;
   }
-  // push: 마지막에 요소 추가
+
   push(val) {
     const newNode = new Node(val);
     if (this.length === 0) {
@@ -28,7 +27,7 @@ class DoublyLinkList {
     this.length++;
     return this;
   }
-  // pop: 마지막 요소 제거
+
   pop() {
     if (!this.head) return undefined;
     const popedNode = this.tail;
@@ -43,7 +42,7 @@ class DoublyLinkList {
     this.length--;
     return popedNode;
   }
-  // shift: 첫 요소 제거
+
   shift() {
     if (this.length === 0) return undefined;
     const oldHead = this.head;
@@ -57,7 +56,7 @@ class DoublyLinkList {
     this.length--;
     return oldHead;
   }
-  // unshift: 첫 요소 추가
+
   unshift(val) {
     const newNode = new Node(val);
     if (this.length === 0) {
@@ -71,7 +70,7 @@ class DoublyLinkList {
     this.length++;
     return this;
   }
-  // get:
+
   get(index) {
     if (index < 0 || index >= this.length) return null;
     let count, current;
@@ -92,7 +91,7 @@ class DoublyLinkList {
     }
     return current;
   }
-  // set:
+
   set(index, val) {
     const foundNode = this.get(index);
     if (foundNode != null) {
@@ -101,7 +100,7 @@ class DoublyLinkList {
     }
     return false;
   }
-  // insert:
+
   insert(index, val) {
     if (index < 0 || index > this.length) return false;
     if (index === 0) return !!this.unshift(val);
@@ -116,7 +115,7 @@ class DoublyLinkList {
     this.length++;
     return true;
   }
-  // remove:
+
   remove(index) {
     if (index < 0 || index >= this.length) return undefined;
     if (index === 0) return !!this.shift();
@@ -131,7 +130,39 @@ class DoublyLinkList {
     this.length--;
     return removedNode;
   }
-  // TODO: DELETE 리스트 출력
+
+  traverse() {
+    const arr = [];
+    let current = this.head;
+    while (current) {
+      arr.push(current.val);
+      current = current.next;
+    }
+    return arr;
+  }
+
+  reverse() {
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+    let next = null;
+    let prev = null;
+    for (let i = 0; i < this.length; i++) {
+      next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
+    }
+    next = null;
+    node = this.head;
+    for (let i = 0; i < this.length; i++) {
+      prev = node.prev;
+      node.prev = next;
+      next = node;
+      node = prev;
+    }
+  }
+  // TODO: DELETE
   print() {
     const arr = [];
     let current = this.head;
@@ -142,8 +173,8 @@ class DoublyLinkList {
     console.log(arr);
   }
 }
-const list = new DoublyLinkList();
 
+const list = new DoublyLinkList();
 /* ---------------------------------- push ----------------------------------
 LIST: [] -> [ '1번', '2번', '3번', '4번', '5번' ] */
 list.push('1번');
@@ -206,3 +237,11 @@ LIST: [ 'FIRST', '0번', '바꿈2', '2번', '바꿈1', '4번', 'LAST' ] -> [ '0�
 list.remove(0); // true
 list.remove(5); // true
 list.remove(100); // undefined
+
+/* -------------------------------- traverse -------------------------------- 
+LIST: [ '0번', '바꿈2', '2번', '바꿈1', '4번' ] */
+list.traverse();
+
+/* --------------------------------- reverse --------------------------------
+LIST: [ '0번', '바꿈2', '2번', '바꿈1', '4번' ] -> [ '4번', '바꿈1', '2번', '바꿈2', '0번' ] */
+list.reverse();

@@ -1,5 +1,4 @@
-/* [1] Class - Single Linked
- */
+// [1] Class - Single Linked
 class Node {
   constructor(val) {
     this.val = val;
@@ -21,12 +20,12 @@ class SinglyLinkedList {
     this.tail = null;
     this.length = 0;
   }
-  // push: 마지막에 요소 추가
+
   push(val) {
     const newNode = new Node(val);
     if (!this.head) {
       this.head = newNode;
-      this.tail = this.head;
+      this.tail = newNode;
     } else {
       this.tail.next = newNode;
       this.tail = newNode;
@@ -34,15 +33,7 @@ class SinglyLinkedList {
     this.length++;
     return this;
   }
-  // TODO: Delete
-  traverse() {
-    let current = this.head;
-    while (current) {
-      console.log(current.val);
-      current = current.next;
-    }
-  }
-  // pop: 마지막 요소 제거
+
   pop() {
     if (!this.head) return undefined;
     let current = this.head;
@@ -60,7 +51,7 @@ class SinglyLinkedList {
     }
     return current;
   }
-  // shift: 첫 번째 요소 제거
+
   shift() {
     if (!this.head) return undefined;
     const currentHead = this.head;
@@ -69,12 +60,12 @@ class SinglyLinkedList {
     if (this.length === 0) this.tail = null;
     return currentHead;
   }
-  // unshift: 첫 번째 요소 추가
+
   unshift(val) {
     const newNode = new Node(val);
     if (!this.head) {
       this.head = newNode;
-      this.tail = this.head;
+      this.tail = newNode;
     } else {
       newNode.next = this.head;
       this.head = newNode;
@@ -82,7 +73,6 @@ class SinglyLinkedList {
     this.length++;
     return this;
   }
-  // get
   get(index) {
     if (index < 0 || index >= this.length) return null;
     let counter = 0;
@@ -93,7 +83,6 @@ class SinglyLinkedList {
     }
     return current;
   }
-  // set: 해당 위치의 값 변경
   set(index, val) {
     let foundNode = this.get(index);
     if (foundNode) {
@@ -102,7 +91,7 @@ class SinglyLinkedList {
     }
     return false;
   }
-  // insert: 해당 위치에 값 추가
+
   insert(index, val) {
     if (index < 0 || index > this.length) return false;
     if (index === this.length) return !!this.push(val);
@@ -115,18 +104,28 @@ class SinglyLinkedList {
     this.length++;
     return true;
   }
-  // remove: 해당 위치의 값 제거
+
   remove(index) {
     if (index < 0 || index >= this.length) return undefined;
-    if (index === 0) return !!this.shift();
-    if (index === this.length - 1) return !!this.pop();
+    if (index === 0) return this.shift();
+    if (index === this.length - 1) return this.pop();
     const prevNode = this.get(index - 1);
     const removed = prevNode.next;
     prevNode.next = removed.next;
     this.length--;
     return true;
   }
-  // reverse: 리스트 순서 뒤집기
+
+  traverse() {
+    const arr = [];
+    let current = this.head;
+    while (current) {
+      arr.push(current.val);
+      current = current.next;
+    }
+    return arr;
+  }
+
   reverse() {
     let node = this.head;
     this.head = this.tail;
@@ -141,20 +140,9 @@ class SinglyLinkedList {
     }
     return this;
   }
-  // TODO: DELETE 리스트 출력
-  print() {
-    const arr = [];
-    let current = this.head;
-    while (current) {
-      arr.push(current.val);
-      current = current.next;
-    }
-    console.log(arr);
-  }
 }
 
 const list = new SinglyLinkedList();
-// LIST:
 /* ---------------------------------- push ---------------------------------- 
 LIST: undefined -> [ '1번', '2번', '3번', '4번', '5번' ] */
 list.push('1번');
@@ -202,6 +190,10 @@ list.remove(0); // true
 list.remove(4); // true
 list.remove(100); // undefined
 
+/* -------------------------------- traverse --------------------------------
+LIST: [ '0번', '2번', '바꿈', '4번' ] */
+list.traverse(); // [ '0번', '2번', '바꿈', '4번' ]
+
 /* --------------------------------- reverse --------------------------------
-LIST: [ '0번', '2번', '바꿈', '4번' ] ->[ '4번', '바꿈', '2번', '0번' ] */
-list.reverse();
+LIST: [ '0번', '2번', '바꿈', '4번' ] -> [ '4번', '바꿈', '2번', '0번' ] */
+list.reverse(); // [ '4번', '바꿈', '2번', '0번' ]
